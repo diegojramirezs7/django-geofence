@@ -18,7 +18,7 @@ def geofence(request):
 		data = request.body
 		print(data)
 		return HttpResponse("your data was {}".format(str(data)))
-	elif request.method == 'GET':
+	else:
 		return HttpResponse("you just got some data")
 
 
