@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Greeting
+from .models import GeofenceEvent
 import requests
 
 # Create your views here.
@@ -17,6 +18,8 @@ def geofence(request):
 		data = request.body
 		print(data)
 		return HttpResponse("your data was {}".format(str(data)))
+	elif request.method == 'GET':
+		return HttpResponse("you just got some data")
 
 
 def db(request):
