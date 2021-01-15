@@ -84,7 +84,8 @@ def events(request):
 		ls = []
 		events = GeofenceEvent.objects.all()
 		for event in events:
-			ls.append({'geofence': event.geofence.name, 'eventType': event.event, 'time': str(event.time)})
+			pretty_time = event.time.strftime("%m/%d/%Y, %H:%M:%S")
+			ls.append({'geofence': event.geofence.name, 'eventType': event.event, 'time': pretty_time})
 
 		return render(request, 'event_log.html', {'events': ls})
 
