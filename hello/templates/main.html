@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Geofence test</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<style type="text/css">
+		.main-form {
+			padding: 4rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row main-form">
+			<form class="form-horizontal" action="/" method="post">
+			    <div class="form-group">
+			      <label for="geofence">Geofence Name:</label>
+			      <div class="col-sm-12">
+			        <input type="text" class="form-control" id="geofence" placeholder="Enter Geofence Name" name="name">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="lat">Latitude:</label>
+			      <div class="col-sm-12">          
+			        <input type="text" class="form-control" id="lat" placeholder="Enter latitude" name="lat">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="long">Longitude:</label>
+			      <div class="col-sm-12">          
+			        <input type="text" class="form-control" id="long" placeholder="Enter Longitude" name="lng">
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="long">Radius:</label>
+			      <div class="col-sm-12">          
+			        <input type="text" class="form-control" id="radius" placeholder="Enter Radius" name="radius">
+			      </div>
+			    </div>
+			    <div class="form-group">        
+			      <div class="col-sm-12">
+			        <button type="submit" class="btn btn-default">Add Geofence</button>
+			      </div>
+			    </div>
+			</form>
+		</div>
+		<div class="row">
+			<table class="table table-striped">
+				 <thead>
+				    <tr>
+				      <th scope="col">Name</th>
+				      <th scope="col">Latitude</th>
+				      <th scope="col">Longitude</th>
+				      <th scope="col">Radius</th>
+				    </tr>
+				</thead>
+				{% for gf in geofences %}
+					<tr>
+						<td>
+							{{gf.name}}
+						</td>
+						<td>
+							{{gf.latitude}}
+						</td>
+						<td>
+							{{gf.longitude}}
+						</td>
+						<td>
+							{{gf.radius}}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+			
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+</html>

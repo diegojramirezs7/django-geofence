@@ -4,9 +4,15 @@ from django.db import models
 class Greeting(models.Model):
     when = models.DateTimeField("date created", auto_now_add=True)
 
-class GeofenceEvent(models.Model):
-	time = models.DateTimeField("recorded", auto_now_add=True)
-	event = models.CharField(max_length=255, blank=True)
-	user = models.CharField(max_length=255, blank=True, null=True)
-	project = models.CharField(max_length=255, blank=True, null=True)
 
+class Geofence(models.Model):
+	lat = models.FloatField()
+	lng = models.FloatField()
+	name = models.CharField(max_length=255, blank=True, null=True)
+	radius = models.IntegerField()
+
+
+class GeofenceEvent(models.Model):
+	time = models.DateTimeField("recorded")
+	event = models.CharField(max_length=255, blank=True)
+	geofence = models.ForeignKey(Geofence, on_delete=models.CASCADE, related_name='events', null=True)

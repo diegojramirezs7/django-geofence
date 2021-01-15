@@ -16,7 +16,8 @@ import hello.views
 
 urlpatterns = [
     path("", hello.views.index, name="index"),
-    path("geofence/", hello.views.geofence, name="geofence"),
+    path("events/", hello.views.events, name="events"),
+    path("geofences/", hello.views.geofences, name="geofences"),
     path("db/", hello.views.db, name="db"),
     path("admin/", admin.site.urls),
 ]
