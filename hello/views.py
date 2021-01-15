@@ -100,7 +100,8 @@ def geofences(request):
 					'name': geofence.name,
 					'lat': geofence.lat,
 					'lng': geofence.lng,
-					'radius': geofence.radius
+					'radius': geofence.radius,
+					'id': geofence.id
 				}
 			)
 
