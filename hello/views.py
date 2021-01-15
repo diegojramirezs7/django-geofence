@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
@@ -7,6 +7,7 @@ from .models import Greeting
 from .models import GeofenceEvent, Geofence
 import requests
 import json
+from datetime import datetime
 
 # Create your views here.
 @csrf_exempt
@@ -55,20 +56,28 @@ def index(request):
 @csrf_exempt
 def events(request):
 	if request.method == 'POST':
-		data = request.body
+		event = request.POST['event']
+		geofence = request.POST['geofence']
+		time = request.POST['time']
 
-		json_data = json.loads(data)
+		date_time_obj = datetime.strptime(time, '%Y-%m-%d %H:%M:%S.%f')
+		geofence_queryset = Geofence.objects.all()
 
-		print(json_data)
+		geofence_object = get_object_or_404(Geofence, pk = geofence)
 
-		# event = GeofenceEvent(
-		# 	time = "now",
-		# 	event = 'enter',
-		# 	user = 'project',
-		# 	project = '1asdf'
-		# )
+		json_data = {
+			'event': event,
+			'geofence': str(geofence_object), 
+			'time': str(date_time_obj)
+		}
 
-		# event.save()
+		event = GeofenceEvent(
+			time = date_time_obj,
+			event = event,
+			geofence = geofence_object
+		)
+
+		event.save()
 
 		return HttpResponse("your data was {}".format(json_data))
 	else:
@@ -96,8 +105,6 @@ def geofences(request):
 			)
 
 		return JsonResponse(ls, safe=False)
-
-
 
 
 def db(request):
