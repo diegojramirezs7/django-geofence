@@ -82,7 +82,7 @@ def events(request):
 		return HttpResponse("your data was {}".format(json_data))
 	else:
 		ls = []
-		events = GeofenceEvent.objects.all()
+		events = GeofenceEvent.objects.all().order_by('time')
 		for event in events:
 			pretty_time = event.time.strftime("%m/%d/%Y, %H:%M:%S")
 			ls.append({'geofence': event.geofence.name, 'eventType': event.event, 'time': pretty_time})
