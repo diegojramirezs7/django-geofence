@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
 
 from .models import Greeting
-from .models import GeofenceEvent, Geofence
+from .models import GeofenceEvent, Geofence, LocationUpdate
 import requests
 import json
 from datetime import datetime
@@ -88,6 +88,39 @@ def events(request):
 			ls.append({'geofence': event.geofence.name, 'eventType': event.event, 'time': pretty_time})
 
 		return render(request, 'event_log.html', {'events': ls})
+
+
+
+
+@csrf_exempt
+def location(request):
+	if request.method == 'POST':
+		lat = request.POST['latitude']
+		lng = request.POST['longitude']
+		time = request.POST['time']
+
+		date_time_obj = datetime.strptime(time, '%Y-%m-%d %H:%M:%S.%f')
+
+		location_object = LocationUpdate(
+			latitude = lat,
+			longitude = lng, 
+			time = time
+		)
+
+		location_object.save()
+
+		return HttpResponse("succces")
+	else:
+		ls = []
+		location_updates = LocationUpdate.objects.all().order_by('time')
+		for update in location_updates:
+			pretty_time = update.time.strftime("%m/%d/%Y, %H:%M:%S")
+			ls.append({'lat': update.latitude, 'lng': update.longitude, 'time': update.time})
+
+		return render(request, 'location_updates.html', {'updates': ls})
+
+
+
 
 
 @csrf_exempt

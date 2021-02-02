@@ -18,6 +18,7 @@ urlpatterns = [
     path("", hello.views.index, name="index"),
     path("events/", hello.views.events, name="events"),
     path("geofences/", hello.views.geofences, name="geofences"),
+    path("location/", hello.views.location, name='location'),
     path("db/", hello.views.db, name="db"),
     path("admin/", admin.site.urls),
 ]

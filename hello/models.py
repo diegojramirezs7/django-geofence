@@ -16,3 +16,8 @@ class GeofenceEvent(models.Model):
 	time = models.DateTimeField("recorded")
 	event = models.CharField(max_length=255, blank=True)
 	geofence = models.ForeignKey(Geofence, on_delete=models.CASCADE, related_name='events', null=True)
+
+class LocationUpdate(models.Model):
+	latitude = models.FloatField()
+	longitude = models.FloatField()
+	time = models.DateTimeField("recorded")
