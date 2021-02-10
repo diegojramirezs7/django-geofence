@@ -56,31 +56,35 @@ def index(request):
 @csrf_exempt
 def events(request):
 	if request.method == 'POST':
-		event = request.POST['event']
-		geofence = request.POST['geofence']
-		time = request.POST['time']
+		try:
+			event = request.POST['event']
+			geofence = request.POST['geofence']
+			time = request.POST['time']
 
-		date_time_obj = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
-		# "2021-02-10T12:42:55.655"
-		geofence_queryset = Geofence.objects.all()
+			date_time_obj = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
+			# "2021-02-10T12:42:55.655"
+			geofence_queryset = Geofence.objects.all()
 
-		geofence_object = get_object_or_404(Geofence, pk = geofence)
+			geofence_object = get_object_or_404(Geofence, pk = geofence)
 
-		json_data = {
-			'event': event,
-			'geofence': str(geofence_object), 
-			'time': str(date_time_obj)
-		}
+			json_data = {
+				'event': event,
+				'geofence': str(geofence_object), 
+				'time': str(date_time_obj)
+			}
 
-		event = GeofenceEvent(
-			time = date_time_obj,
-			event = event,
-			geofence = geofence_object
-		)
+			event = GeofenceEvent(
+				time = date_time_obj,
+				event = event,
+				geofence = geofence_object
+			)
 
-		event.save()
+			event.save()
 
-		return HttpResponse("your data was {}".format(json_data))
+			return JsonResponse({"success": True})
+		except Exception as e:
+			return JsonResponse({"error": str(e)})
+
 	else:
 		ls = []
 		events = GeofenceEvent.objects.all().order_by('time')
