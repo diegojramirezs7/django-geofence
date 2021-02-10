@@ -60,7 +60,8 @@ def events(request):
 		geofence = request.POST['geofence']
 		time = request.POST['time']
 
-		date_time_obj = datetime.strptime(time, '%Y-%m-%d %H:%M:%S.%f')
+		date_time_obj = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
+		# "2021-02-10T12:42:55.655"
 		geofence_queryset = Geofence.objects.all()
 
 		geofence_object = get_object_or_404(Geofence, pk = geofence)
