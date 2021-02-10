@@ -57,9 +57,9 @@ def index(request):
 def events(request):
 	if request.method == 'POST':
 		try:
-			event = request.POST['event']
 			geofence = request.POST['geofence']
 			time = request.POST['time']
+			event = request.POST['event']
 
 			date_time_obj = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
 			# "2021-02-10T12:42:55.655"
